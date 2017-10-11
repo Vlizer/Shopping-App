@@ -1,14 +1,16 @@
-
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Recipe} from '../model/recipe.model';
 import {ShoppingListService} from './shopping.service';
 import {Ingredient} from '../model/ingredient.model';
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class RecipeService {
   constructor(private shoppingListService: ShoppingListService) {
+    console.log('dupa');
   }
 
+  recipesChanged = new Subject<Recipe[]>();
   private _recipes: Recipe[] = [
     new Recipe(
       'Tasty Schnitzel',
@@ -38,5 +40,20 @@ export class RecipeService {
 
   getRecipe(index: number): Recipe {
     return this._recipes[index];
+  }
+
+  addRecipe(recipe: Recipe) {
+    this._recipes.push(recipe);
+    this.recipesChanged.next(this._recipes.slice());
+  }
+
+  updateRecipe(index: number, recipe: Recipe) {
+    this._recipes[index] = recipe;
+    this.recipesChanged.next(this._recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this._recipes.splice(index, 1);
+    this.recipesChanged.next(this._recipes.slice());
   }
 }
