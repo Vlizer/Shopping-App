@@ -1,43 +1,34 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {HttpModule} from '@angular/http';
+import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './header/header.component';
-import {DropdownDirective} from './directives/dropdown.directive';
-import {ShoppingListComponent} from './shopping-list/shopping-list.component';
-import {RecipesComponent} from './recipes/recipes.component';
-import {AppRoutingModule} from './app-routing.module';
-import {RecipesListComponent} from './recipes/recipes-list/recipes-list.component';
-import {RecipesDetailComponent} from './recipes/recipes-detail/recipes-detail.component';
-import {RecipesDefaultComponent} from './recipes/recipes-default/recipes-default.component';
-import {ShoppingListService} from './services/shopping.service';
-import {RecipeService} from './services/recipe.service';
-import {RecipeItemComponent} from './recipes/recipes-list/recipe-item/recipe-item.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { RecipesEditComponent } from './recipes/recipes-edit/recipes-edit.component';
+import {AuthGuard} from './auth/service/auth-guard.service';
+import {AuthModule} from './auth/auth-module';
+import {AuthService} from './auth/service/auth.service';
+import {CoreModule} from './core/core.module';
+import {DatabaseService} from './shared/services/database.service';
+import {RecipeService} from './shared/services/recipe.service';
+import {SharedModule} from './shared/shared.module';
+import {ShoppingListService} from './shared/services/shopping.service';
+import {ProfilesModule} from './profiles/profiles.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    DropdownDirective,
-    ShoppingListComponent,
-    RecipesComponent,
-    RecipesListComponent,
-    RecipesDetailComponent,
-    RecipesDefaultComponent,
-    RecipeItemComponent,
-    ShoppingEditComponent,
-    RecipesEditComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule
+    HttpModule,
+    AuthModule,
+    CoreModule,
+    ProfilesModule,
+    SharedModule
   ],
-  providers: [ShoppingListService, RecipeService],
+  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

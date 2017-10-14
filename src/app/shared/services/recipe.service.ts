@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Recipe} from '../model/recipe.model';
+import {Recipe} from '../../model/recipe.model';
 import {ShoppingListService} from './shopping.service';
-import {Ingredient} from '../model/ingredient.model';
+import {Ingredient} from '../../model/ingredient.model';
 import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class RecipeService {
   constructor(private shoppingListService: ShoppingListService) {
-    console.log('dupa');
   }
 
   recipesChanged = new Subject<Recipe[]>();
@@ -55,5 +54,14 @@ export class RecipeService {
   deleteRecipe(index: number) {
     this._recipes.splice(index, 1);
     this.recipesChanged.next(this._recipes.slice());
+  }
+
+  getRecipes() {
+    return this._recipes.slice();
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this._recipes = recipes;
+    this.recipesChanged.next(recipes.slice());
   }
 }

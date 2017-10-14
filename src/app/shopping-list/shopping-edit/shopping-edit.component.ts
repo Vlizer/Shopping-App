@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ShoppingListService} from '../../services/shopping.service';
+import {ShoppingListService} from '../../shared/services/shopping.service';
 import {Ingredient} from '../../model/ingredient.model';
 import {NgForm} from '@angular/forms';
 import {Subscription} from "rxjs/Subscription";
@@ -42,7 +42,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     } else {
       this.shoppingService.updateIngredient(this.editedItemIndex, ingredient);
     }
-    console.log(this.form.value);
     this.form.reset();
     this.editMode = false;
   }

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Recipe} from '../../model/recipe.model';
-import {RecipeService} from '../../services/recipe.service';
-import {ShoppingListService} from '../../services/shopping.service';
+import {RecipeService} from '../../shared/services/recipe.service';
+import {ShoppingListService} from '../../shared/services/shopping.service';
 
 @Component({
   selector: 'app-recipes-detail',
