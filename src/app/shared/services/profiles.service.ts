@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
+
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -9,7 +10,7 @@ export class ProfilesService {
   private serverUrl = '/api/servers';
   private profileUrl = '/api/profile';
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   getServerList() {

@@ -1,26 +1,19 @@
-import {RecipeService} from './recipe.service';
-import {Http, Response} from '@angular/http';
-import 'rxjs/Rx';
-import {Observable} from 'rxjs/Observable';
-import {Recipe} from '../../model/recipe.model';
 import {Injectable} from '@angular/core';
-import {AuthService} from '../../auth/service/auth.service';
+import {HttpClient} from '@angular/common/http';
+import 'rxjs/Rx';
+
+import {RecipeService} from './recipe.service';
+import {Recipe} from '../model/recipe.model';
 
 @Injectable()
 export class DatabaseService {
   url = 'https://ng-recipes-book-1.firebaseio.com/data.json';
 
-  constructor(private http: Http, private recipeService: RecipeService, private authService: AuthService) {
+  constructor(private httpClient: HttpClient, private recipeService: RecipeService) {
   }
 
   saveRecipes() {
-    const token = this.authService.getToken();
-    this.http.put(this.url + '?auth=' + token,
-      this.recipeService.getRecipes())
-      .subscribe(
-        (response) => console.log(response),
-        (error) => console.log(error)
-      );
+    this.httpClient.put(this.url, this.recipeService.getRecipes());
   }
 
   fetchRecipes() {
@@ -34,17 +27,6 @@ export class DatabaseService {
   }
 
   private getRecipes() {
-    const token = this.authService.getToken();
-    return this.http.get(this.url + '?auth=' + token)
-      .map(
-        (response: Response) => {
-          return response.json();
-        }
-      )
-      .catch(
-        (error: Response) => {
-          return Observable.throw(error);
-        }
-      );
+    return this.httpClient.get<Recipe[]>(this.url);
   }
 }

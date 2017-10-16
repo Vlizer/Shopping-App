@@ -7,10 +7,12 @@ import {AuthService} from '../auth/service/auth.service';
 import {ShoppingListService} from '../shared/services/shopping.service';
 import {RecipeService} from '../shared/services/recipe.service';
 import {DatabaseService} from '../shared/services/database.service';
-import { ErrorComponent } from './error/error.component';
-import {ErrorService} from "../shared/services/error.service";
-import {FormsModule} from "@angular/forms";
-import {ProfilesService} from "../shared/services/profiles.service";
+import {ErrorComponent} from './error/error.component';
+import {ErrorService} from '../shared/services/error.service';
+import {ProfilesService} from '../shared/services/profiles.service';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthInterceptor} from "../shared/interceptors/auth.interceptor";
+import {LoggingInterceptor} from "../shared/interceptors/logging.interceptor";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {ProfilesService} from "../shared/services/profiles.service";
     DatabaseService,
     AuthService,
     ErrorService,
-    ProfilesService
+    ProfilesService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}
   ]
 })
 export class CoreModule {
